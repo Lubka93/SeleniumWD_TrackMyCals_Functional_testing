@@ -15,7 +15,7 @@ Ensure you have the following installed on your system:
 
 1. **Clone the Repository:**
     ```bash
-    git clone https://github.com/Lubka93/cypressE2E_TrackMyCals.git
+    git clone https://github.com/Lubka93/SeleniumWD_TrackMyCals_Functional_testing.git
     ```
 
 2. **Navigate to the Project Directory:**

@@ -1,7 +1,7 @@
 package-lock.json
 package.json
 tests-mock
-test-reports\
+test-reports
 node_modules
 .vscode
 mochawesome-report
