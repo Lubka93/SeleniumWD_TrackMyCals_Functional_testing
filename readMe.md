@@ -29,7 +29,7 @@ Ensure you have the following installed on your system:
     ```
 
 4. **Run all Tests:**
-    - To open the Cypress Test Runner:
+    - Use this command:
         ```bash
         npm run test
         ```
