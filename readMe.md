@@ -20,7 +20,7 @@ Ensure you have the following installed on your system:
 
 2. **Navigate to the Project Directory:**
     ```bash
-    cd cypressE2E_TrackMyCals
+    cd seleniumWD_TrackMyCals
     ```
 
 3. **Install Dependencies:**
