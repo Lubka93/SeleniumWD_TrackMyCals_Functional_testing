@@ -1,0 +1,11 @@
+package-lock.json
+package.json
+tests-mock
+test-reports\
+node_modules
+.vscode
+mochawesome-report
+tests-mock/*.js
+tests-mock/*.mjs
+mochawesome-report/*.html
+mochawesome-report/*.json

@@ -1,0 +1,383 @@
+{
+  "stats": {
+    "suites": 2,
+    "tests": 10,
+    "passes": 7,
+    "pending": 0,
+    "failures": 3,
+    "start": "2024-08-22T13:00:20.294Z",
+    "end": "2024-08-22T13:04:06.908Z",
+    "duration": 226614,
+    "testsRegistered": 10,
+    "passPercent": 70,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "e94c6f79-cd68-4e10-a5de-2e6aff836f29",
+      "title": "",
+      "fullFile": "",
+      "file": "",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+          "title": "End to End Test for TrackAppApp, Positive testcases",
+          "fullFile": "C:\\Users\\lubic\\Desktop\\seleniumDemo\\test\\TrackCalAppTest.mjs",
+          "file": "\\test\\TrackCalAppTest.mjs",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"End to End Test for TrackAppApp, Positive testcases\"",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases \"before all\" hook in \"End to End Test for TrackAppApp, Positive testcases\"",
+              "timedOut": false,
+              "duration": 7911,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await new Promise(resolve => setTimeout(resolve, 1000));\nawait base.showPage('https://trackmycals.netlify.app');",
+              "err": {},
+              "uuid": "3a56b2f9-7101-4a4e-81cc-c068a69e7cd1",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"End to End Test for TrackAppApp, Positive testcases\"",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases \"after all\" hook in \"End to End Test for TrackAppApp, Positive testcases\"",
+              "timedOut": false,
+              "duration": 590,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await base.closePage();",
+              "err": {},
+              "uuid": "aab50e98-853b-4e80-b4c0-34f738717454",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "Test for Calorie Valid Limit Input",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test for Calorie Valid Limit Input",
+              "timedOut": false,
+              "duration": 23552,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const limit = new Limit(base.driver);\n //Open input modal\n for (const item of testData01) {\n     await limit.openLimitModal();\n // Fill limit input and click set button\n     await limit.fillLimitInput(item)\n // Assertion - Calorie Limit Input assertion after each loop\n     let limitCheck = await limit.driver.findElement(By.id('calorie-limit-show'));\n     let limitText = await limitCheck.getText();\n     expect(limitText).to.equal(item);\n  // Reset limit input\n     await limit.resetLimitInput();\n     }",
+              "err": {},
+              "uuid": "1abedf7e-51f8-4837-b5ff-1e9478301124",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test for add the meal in valid format",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test for add the meal in valid format",
+              "timedOut": false,
+              "duration": 28552,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const meal = new Meal(base.driver);\n\n    for (let item = 0; item < testData02.length; item++) {\n    //Open meal modal\n    await meal.openMealModal();\n\n    //Add meal to input window\n    await meal.addMealToInput(testData02[item].meal);\n       \n    //Add calories to input window\n    await meal.addCaloriesToInput(testData02[item].calories);\n      \n    //Click on add button to add meal card to the DOM\n    await meal.clickOnAddButton ();\n    }  \n     \n     // Assertion - Added meal\n    const wrapper = await base.driver.findElement(By.id('meal-wrapper'));\n    const mealCards = await wrapper.findElements(By.css('div.box.border'));\n    const mealCaloriesDomArr = [];\n\n\n    for (let i = 0; i < testData02.length; i++) {\n    const mealCard = mealCards[i];\n    let mealCalsLocator = By.xpath(`/html/body/div[2]/div/div[1]/div[2]/div[${1+i}]/div`);\n    await base.driver.wait(until.elementLocated(mealCalsLocator), 2000);\n    let mealCalsElement = await mealCard.findElement(mealCalsLocator);\n    let mealCals = await mealCalsElement.getText();\n    mealCaloriesDomArr.push(parseInt(mealCals));\n    expect(mealCals).to.equal(`${Math.round(testData02[i].calories)}`);\n\n    let mealNameLocator = By.xpath(`/html/body/div[2]/div/div[1]/div[2]/div[${1+i}]/p`);\n    await base.driver.wait(until.elementLocated(mealNameLocator), 2000);\n    let mealNameElement = await mealCard.findElement(mealNameLocator);\n    let mealName = await mealNameElement.getText();\n    expect(mealName).to.equal(testData02[i].meal.trim());\n    }\n\n    //Assertion - Verify the change in consumed calories count\n    let consumedCount = await base.driver.findElement(By.id('consumed-cals')).getText();\n   const totalCalCount =  mealCaloriesDomArr.reduce((acc, cur) => { return acc+ cur }, 0);\n    expect(totalCalCount).to.equal(parseInt(consumedCount));\n   //Assertion - Verify the change in remaining calories count\n    let remainingCount = await base.driver.findElement(By.id('rem')).getText();\n    let inputLimit = await base.driver.findElement(By.id('limit')).getText();\n    expect(Number(inputLimit)- totalCalCount).to.equal(Number(remainingCount));\n    //Assertion - Verify the change in gain/loss calories count\n    let totalCount = await base.driver.findElement(By.id('gain-loss')).getText();\n    expect(totalCalCount - Number(inputLimit)).to.equal(Number(totalCount));\n    //Assertion for progress bar\n   // let progressDiv = await base.driver.wait(until.elementLocated(By.id('progress-bar')));\n    let progressBar = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('style');\n   let progressBarClass = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('class');\n    if(inputLimit >= consumedCount) {\n    //    let progressBarClass = await progressDiv.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('class');\n        let total =  (consumedCount/inputLimit)*100;\n        expect(progressBar).to.include(`width: ${total}%`);\n        expect(progressBarClass).to.contain('bg-success');\n    } else if (inputLimit < consumedCount) { \n  //  let progressBarClass = await progressDiv.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('class');\n        expect(progressBar).to.include('width: 100%');\n        expect(progressBarClass).to.contain('bg-danger');\n     }",
+              "err": {},
+              "uuid": "16bf7322-9441-4e16-ae7e-d1c8106c0673",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test removing the meal",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test removing the meal",
+              "timedOut": false,
+              "duration": 15631,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const meal = new Meal(base.driver);\n// to remove all mealCards\nconst removed = await meal.removeAllMealCards();\n// Assertion -  for deleting meal cards from the DOM \nexpect(removed).to.be.true;\n    \n// Assertion - Meal cards were removed from the wrapper in the DOM\nconst wrapper = await meal.driver.wait(until.elementLocated(By.id('meal-wrapper')), 5000);\nconst childElements = await wrapper.findElements(By.css('*')); // Find all child elements\nexpect(childElements.length).equal(0);\n// Assertion for progress bar\nlet progressBar = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('style');\nexpect(progressBar).to.include('width: 0%');",
+              "err": {},
+              "uuid": "911a8884-168c-430f-9528-dcd016660065",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test for add valid the workout input",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test for add valid the workout input",
+              "timedOut": false,
+              "duration": 28747,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const workout = new Workout(base.driver);\n\nfor (let item = 0; item < testData03.length; item++) {\n   \n    //open workout modal\n    workout.openWorkoutModal();\n    //add workout into workout input window\n    await workout.addWorkoutToInput(testData03[item].workout);\n    //add calories into input window\n    await workout.addCaloriesToInput (testData03[item].calories);\n    //click add button for adding the workout card to the DOM\n    await workout.clickOnAddButton ();\n}  \n    // Assertion - Added workout\n    const wrapper = await base.driver.findElement(By.id('workout-wrapper'));\n    const workoutCards = await wrapper.findElements(By.css('div.box.border'));\n    const workoutCaloriesDomArr = [];\n    for (let i = 0; i < testData03.length; i++) {\n    const workoutCard = workoutCards[i];\n    let workoutCalsLocator = By.xpath(`/html/body/div[2]/div/div[2]/div[2]/div[${1+i}]/div`);\n    await base.driver.wait(until.elementLocated(workoutCalsLocator), 2000);\n    let workoutCalsElement = await workoutCard.findElement(workoutCalsLocator);\n    let workoutCals = await workoutCalsElement.getText();\n    workoutCaloriesDomArr.push(parseInt(workoutCals));\n    expect(workoutCals).to.equal(`${testData03[i].calories}`);\n    let workoutNameLocator = By.xpath(`/html/body/div[2]/div/div[2]/div[2]/div[${1+i}]/p`);\n    await base.driver.wait(until.elementLocated(workoutNameLocator), 2000);\n    let workoutNameElement = await workoutCard.findElement(workoutNameLocator);\n    let workoutName = await workoutNameElement.getText();\n    expect(workoutName).to.equal(testData03[i].workout.trim());\n}\n    //Assertion - Verify the change in consumed calories count\n    let burnedCount = await base.driver.findElement(By.id('burned-cals')).getText();\n    const totalCalCount =  workoutCaloriesDomArr.reduce((acc, cur) => { return acc+ cur }, 0);\n    expect(totalCalCount).to.equal(parseInt(burnedCount));\n    //Assertion - Verify the change in remaining calories count\n    let remainingCount = await base.driver.findElement(By.id('rem')).getText();\n    let inputLimit = await base.driver.findElement(By.id('limit')).getText();\n    expect(Number(inputLimit)+ totalCalCount).to.equal(Number(remainingCount));\n    //Assertion - Verify the change in gain/loss calories count\n    let totalCount = await base.driver.findElement(By.id('gain-loss')).getText();\n    expect(totalCalCount + Number(inputLimit)).to.equal(Number(-totalCount));\n    //Assertion for progress bar\n   // let progressDiv = await base.driver.wait(until.elementLocated(By.id('progress-bar')));\n   let progressBar = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('style');\n   let progressBarClass = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('class');\n   \n    //    let progressBarClass = await progressDiv.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('class');\n      //  let total =  (consumedCount/inputLimit)*100;\n        expect(progressBar).to.include('width: 0%');\n        expect(progressBarClass).to.contain('bg-success');",
+              "err": {},
+              "uuid": "c75977b5-b6e6-4545-ba6e-045219e20ff3",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test removing the workout",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test removing the workout",
+              "timedOut": false,
+              "duration": 11454,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const workout = new Workout(base.driver);\n//remove all workout cards from DOM\nlet removed = await workout.removeAllWorkoutCard ();\n//Assertion function for deleting workouts runs\nexpect(removed).to.be.true;\n// Assertion - Workout cards were removed from wrapper in the DOM\nconst wrapper = await workout.driver.wait(until.elementLocated(By.id('workout-wrapper')),5000);    \n           const childElements = await wrapper.findElements(By.css('*')); // Find all child elements\nexpect(childElements.length).equal(0);\n//Assertion for progress bar\nlet progressBar = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('style');\nexpect(progressBar).to.include('width: 0%');",
+              "err": {},
+              "uuid": "51de6d22-4d8f-4a4c-a18f-f7a97a43bc6c",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test filter functionality for meals",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test filter functionality for meals",
+              "timedOut": false,
+              "duration": 39022,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const meal = new Meal(base.driver);\n//Add meals to the DOM\n       for (let item = 0; item < testData02.length; item++) {\n    //Open meal modal\n   await meal.openMealModal();\n\n    //Add meal to input window\n    await meal.addMealToInput(testData02[item].meal);\n       \n    //Add calories to input window\n    await meal.addCaloriesToInput(testData02[item].calories);\n      \n    //Click on add button to add meal card to the DOM\n   await meal.clickOnAddButton ();\n    }  \n\n    let wrapper = await base.driver.wait(until.elementLocated(By.id('meal-wrapper')));\n    const allFiltredCards = await wrapper.findElements(By.css('div.box.border'));\n    const allPElements = [];\n\n    for (let card of allFiltredCards) {\nlet pElement = await card.findElement(By.css('p'));\nlet pElementText = await pElement.getText();\nlet lowercaseTrimmedText =  pElementText.toLowerCase().trim();   \nallPElements.push(lowercaseTrimmedText);\n    }\n\n\n   await new Promise(resolve => setTimeout(resolve, 500)); \n\nfor (let item = 0; item < testData04.length; item++) {\n    await meal.filterMeals (testData04[item]);\n   let check = await meal.findFilteredCards(allPElements, testData04[item] );   \n        \n    //Assertion - only filtered cards are in meal wrapper\n    if (typeof check === 'boolean')\n   {  expect(check).to.be.true;  }\n   else {console.log(`Assertion error: ${check}`)}\n    \n // reset filter input\n await meal.resetFilterInput();\n}",
+              "err": {},
+              "uuid": "333e51c2-dc8b-42f8-8563-6385417550d3",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test filter functionality for workouts",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Test filter functionality for workouts",
+              "timedOut": false,
+              "duration": 52422,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "const workout = new Workout(base.driver);\n//Add meals to the DOM\n       for (let item = 0; item < testData05.length; item++) {\n    //Open meal modal\n   await workout.openWorkoutModal();\n\n    //Add meal to input window\n    await workout.addWorkoutToInput(testData03[item].workout);\n       \n    //Add calories to input window\n    await workout.addCaloriesToInput(testData03[item].calories);\n      \n    //Click on add button to add meal card to the DOM\n   await workout.clickOnAddButton();\n    }  \n\n    let wrapper = await base.driver.wait(until.elementLocated(By.id('workout-wrapper')));\n    const allFiltredCards = await wrapper.findElements(By.css('div.box.border'));\n    const allPElements = [];\n\n    for (let card of allFiltredCards) {\nlet pElement = await card.findElement(By.css('p'));\nlet pElementText = await pElement.getText();\nlet lowercaseTrimmedText = pElementText.toLowerCase().trim();   \nallPElements.push(lowercaseTrimmedText);\n    }\n\n\n   //await new Promise(resolve => setTimeout(resolve, 500)); \n\nfor (let item = 0; item < testData04.length; item++) {\n    await workout.filterWorkouts (testData05[item]);\n   let check = await workout.findFilteredCardsWorkouts(allPElements, testData05[item] );   \n        \n    //Assertion - only filtered cards are in meal wrapper\n    if (typeof check === 'boolean')\n   {  expect(check).to.be.true;  }\n   else {console.log(`Assertion error: ${check}`)}\n // reset filter input\n await workout.resetFilterInputWorkout ();\n}",
+              "err": {},
+              "uuid": "e2d256ec-c718-4521-9e03-742529e05f07",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Reset all data in app",
+              "fullTitle": "End to End Test for TrackAppApp, Positive testcases Reset all data in app",
+              "timedOut": false,
+              "duration": 7717,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const limit = new Limit(base.driver);\nawait limit.resetLimitInput();\n// Assertion - Workout cards were removed from wrapper in the DOM\nconst mealWrapper = await base.driver.wait(until.elementLocated(By.id('workout-wrapper')),5000);    \nconst mealChildElements = await mealWrapper.findElements(By.css('*')); // Find all child elements\nexpect(mealChildElements.length).equal(0);\n// Assertion - Meal cards were removed from the wrapper in the DOM\nconst workoutWrapper = await base.driver.wait(until.elementLocated(By.id('meal-wrapper')), 5000);\nconst workoutChildElements = await workoutWrapper.findElements(By.css('*')); // Find all child elements\nexpect(workoutChildElements.length).equal(0);\n// Assertion - Reset of limit, burned calories, consumed calories, gain/loss, remaining calories, progress bar\nlet limitBlock = await base.driver.wait(until.elementLocated(By.id('calorie-limit-show'))).getText();\nexpect(limitBlock).equal('2000');\nlet burnedCaloriesBlock = await base.driver.wait(until.elementLocated(By.id('burned-cals'))).getText();\nexpect(burnedCaloriesBlock).equal('0');\nlet consumedCaloriesBlock = await base.driver.wait(until.elementLocated(By.id('consumed-cals'))).getText();\nexpect(consumedCaloriesBlock).equal('0');\nlet gainLossBlock = await base.driver.wait(until.elementLocated(By.id('gain-loss'))).getText();\nexpect(gainLossBlock).equal('-2000');\nlet remainingCaloriesBlock = await base.driver.wait(until.elementLocated(By.id('rem'))).getText();\nexpect(remainingCaloriesBlock).equal('2000');",
+              "err": {
+                "message": "TimeoutError: Waiting until element is visible\nWait timed out after 5244ms",
+                "estack": "TimeoutError: Waiting until element is visible\nWait timed out after 5244ms\n    at C:\\Users\\lubic\\Desktop\\seleniumDemo\\node_modules\\selenium-webdriver\\lib\\webdriver.js:910:22\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)",
+                "diff": null
+              },
+              "uuid": "4c14246a-f21c-4a2c-bfc6-4ecb090f0b27",
+              "parentUUID": "33ba4d4c-2b73-4b6f-8b8e-482f32427e93",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "1abedf7e-51f8-4837-b5ff-1e9478301124",
+            "16bf7322-9441-4e16-ae7e-d1c8106c0673",
+            "911a8884-168c-430f-9528-dcd016660065",
+            "c75977b5-b6e6-4545-ba6e-045219e20ff3",
+            "51de6d22-4d8f-4a4c-a18f-f7a97a43bc6c",
+            "333e51c2-dc8b-42f8-8563-6385417550d3",
+            "e2d256ec-c718-4521-9e03-742529e05f07"
+          ],
+          "failures": [
+            "4c14246a-f21c-4a2c-bfc6-4ecb090f0b27"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 207097,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 0
+        },
+        {
+          "uuid": "e752c46e-afa2-4c21-bdae-91db90ea59a4",
+          "title": "Negative test cases for TrackMyCals app",
+          "fullFile": "C:\\Users\\lubic\\Desktop\\seleniumDemo\\test\\TrackCalAppTest.mjs",
+          "file": "\\test\\TrackCalAppTest.mjs",
+          "beforeHooks": [
+            {
+              "title": "\"before all\" hook in \"Negative test cases for TrackMyCals app\"",
+              "fullTitle": "Negative test cases for TrackMyCals app \"before all\" hook in \"Negative test cases for TrackMyCals app\"",
+              "timedOut": false,
+              "duration": 4967,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await new Promise(resolve => setTimeout(resolve, 1000));\nawait base.showPage('https://trackmycals.netlify.app');",
+              "err": {},
+              "uuid": "f40e70c3-5169-4d9a-b250-913b44069c60",
+              "parentUUID": "e752c46e-afa2-4c21-bdae-91db90ea59a4",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "afterHooks": [
+            {
+              "title": "\"after all\" hook in \"Negative test cases for TrackMyCals app\"",
+              "fullTitle": "Negative test cases for TrackMyCals app \"after all\" hook in \"Negative test cases for TrackMyCals app\"",
+              "timedOut": false,
+              "duration": 1929,
+              "state": null,
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "await base.closePage();",
+              "err": {},
+              "uuid": "a8800432-c2a0-4bfe-9005-be87f66cebcf",
+              "parentUUID": "e752c46e-afa2-4c21-bdae-91db90ea59a4",
+              "isHook": true,
+              "skipped": false
+            }
+          ],
+          "tests": [
+            {
+              "title": "Test for Calorie Invalid Limit Input",
+              "fullTitle": "Negative test cases for TrackMyCals app Test for Calorie Invalid Limit Input",
+              "timedOut": false,
+              "duration": 870,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const limit = new Limit(base.driver);\n //Open input modal\n for (const item of testData06) {\n     await limit.openLimitModal();\n \n // Fill limit input and click set button\n     await limit.fillLimitInput(item);\n//Accept the alert \n    let alertPresent = false;\n    let alertMessage = null;\ntry  {\n    alertPresent = true;\n    let alert = await base.driver.switchTo().alert();\n    alertPresent = true;\n    alertMessage = await alert.getText(); // Get the text from the alert\n    await alert.accept(); // Accept the alert\n      }\ncatch(error) {\n    console.log(`Assertion error: No alert window!`)\n    }\n\n//Assertion - Alert message assertion after each loop\n  try { if (item === '' && alertMessage !== null) {\n        expect(alertMessage).to.equal('Add number of calories!')\n    }\n    else if (isNaN(item) && alertMessage !== null)  {\n        expect(alertMessage).to.equal('Input must be a number!')\n    } else if (parseInt(item) <= 0 && alertMessage !== null) {\n        expect(alertMessage).to.equal('Input must be a positive number!')\n    }  }\n    catch(error) { \n        if(alertMessage === null)\n        {console.log(`Assertion error: valid limit input!`)}\n        else{ \n        console.log(`${error}`)  }\n    }\n // Assertion - Calorie Limit Input assertion after each loop\n \n     let limitCheck = await limit.driver.wait(until.elementLocated(By.id('calorie-limit-show')), 5000);\n     let limitText = await limitCheck.getText();\n    expect(parseInt(limitText)).to.equal(2000);\n \n  // Reset limit input\n     await limit.resetLimitInput();\n     }",
+              "err": {
+                "message": "StaleElementReferenceError: The element with the reference 4d724574-3a08-4d65-ab90-1eb137c1e114 is stale; either its node document is not the active document, or it is no longer connected to the DOM",
+                "estack": "StaleElementReferenceError: The element with the reference 4d724574-3a08-4d65-ab90-1eb137c1e114 is stale; either its node document is not the active document, or it is no longer connected to the DOM\n    at Object.throwDecodedError (node_modules\\selenium-webdriver\\lib\\error.js:521:15)\n    at parseHttpResponse (node_modules\\selenium-webdriver\\lib\\http.js:510:13)\n    at Executor.execute (node_modules\\selenium-webdriver\\lib\\http.js:443:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Driver.execute (node_modules\\selenium-webdriver\\lib\\webdriver.js:740:17)\n    at async Context.<anonymous> (file:///C:/Users/lubic/Desktop/seleniumDemo/test/TrackCalAppTest.mjs:424:26)",
+                "diff": null
+              },
+              "uuid": "aebe4d48-7268-4931-9b75-dfc1baaf0408",
+              "parentUUID": "e752c46e-afa2-4c21-bdae-91db90ea59a4",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Test for add the meal in invalid format",
+              "fullTitle": "Negative test cases for TrackMyCals app Test for add the meal in invalid format",
+              "timedOut": false,
+              "duration": 3218,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const meal = new Meal(base.driver);\n         \n             for (let item = 0; item < testData07.length; item++) {\n         \n    //Open meal modal\n    await meal.openMealModal();\n\n    //Add meal to input window\n    await meal.addMealToInput(testData07[item].meal);\n                \n    //Add calories to input window\n    await meal.addCaloriesToInput(testData07[item].calories);\n      \n    //Click on add button to add meal card to the DOM\n    await meal.clickOnAddButton ();\n          //Accept the alert \n         \n          let alertMessage = null;\n          \n          try {\n              let alert = await base.driver.switchTo().alert();\n              alertMessage = await alert.getText();\n          \n              if (alert && alertMessage !== null) {\n                  // Get the text from the confirmation alert\n                  alertMessage = await alert.getText();\n                  await alert.accept();\n                  console.log('It is a confirmation alert');\n              }\n          } catch (error) {\n              console.log(`No alert window or no confirmation alert: ${error}`);\n          }\n          \n          // If there's no alert, try interacting with other elements\n          if (!alertMessage) {\n              try {\n                  //  interact with the element if there is just prompt alert\n                  \n                  let outOfScopeMeal = await base.driver.findElement(By.id('meal-name'));\n                  let outOfScopeCals = await base.driver.findElement(By.id('calorie-number'));\n               \n               await new Promise(resolve => setTimeout(resolve, 1000));    \n               await outOfScopeMeal.click();\n               await meal.addCaloriesToInput('input');\n               await outOfScopeCals.click();\n               await meal.addMealToInput('meal');\n                  await meal.clickOnAddButton ();\n                  let alert = await base.driver.switchTo().alert();\n                  await alert.accept();\n          \n                  // continue with other steps after interacting with the element\n              } catch (error) {\n                  console.log(`Failed to interact with element: ${error} `);\n              }\n          }\n          \n          \n //Assertion - Alert message assertion after each loop\n      \n             try { \n   if (testData07[item].calories === '' && testData07[item].meal !== '' && alertMessage !== null) {\n         expect(alertMessage).to.equal('Please fill in this field!')\n         }\n   else if (!isNaN(parseInt(item)) < 0 && testData07[item].meal !== '' &&  alertMessage !== null) {\n           expect(alertMessage).to.equal('Input must be a positive number!')\n     } \n   else if (isNaN(item) && testData07[item].meal !== '' && alertMessage !== null)  {\n         expect(alertMessage).to.equal('Calorie input should be a number')\n   } \n   }\n              catch(error) {  \n          console.log(`No alert: ${error}`)  \n       }\n             }  \n              \n    \n   // Assertion - Added meal\n    const wrapper = await base.driver.findElement(By.id('meal-wrapper'));\n    const mealCards = await wrapper.findElements(By.css('div.box.border'));\n   expect(mealCards.length).to.equal(0);\n         \n    //Assertion - Verify the change in consumed calories count\n    const mealCaloriesDomArr = [];\n    let consumedCount = await base.driver.findElement(By.id('consumed-cals')).getText();\n   const totalCalCount =  mealCaloriesDomArr.reduce((acc, cur) => { return acc+ cur }, 0);\n    expect(totalCalCount).to.equal(parseInt(consumedCount));\n         \n   //Assertion - Verify the change in remaining calories count\n    let remainingCount = await base.driver.findElement(By.id('rem')).getText();\n    let inputLimit = await base.driver.findElement(By.id('limit')).getText();\n    expect(Number(inputLimit)- totalCalCount).to.equal(Number(remainingCount));\n         \n    //Assertion - Verify the change in gain/loss calories count\n    let totalCount = await base.driver.findElement(By.id('gain-loss')).getText();\n    expect(totalCalCount - Number(inputLimit)).to.equal(Number(totalCount));\n         \n    //Assertion for progress bar\n    let progressBar = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('style');\n    let progressBarClass = await base.driver.wait(until.elementLocated(By.css('div.progress-bar'))).getAttribute('class')\n    expect(progressBar).to.include(`width: 0%`);\n    expect(progressBarClass).to.contain('bg-success');",
+              "err": {
+                "message": "StaleElementReferenceError: The element with the reference 7800d4c2-8cb0-4134-8353-97aaebf750fa is stale; either its node document is not the active document, or it is no longer connected to the DOM",
+                "estack": "StaleElementReferenceError: The element with the reference 7800d4c2-8cb0-4134-8353-97aaebf750fa is stale; either its node document is not the active document, or it is no longer connected to the DOM\n    at Object.throwDecodedError (node_modules\\selenium-webdriver\\lib\\error.js:521:15)\n    at parseHttpResponse (node_modules\\selenium-webdriver\\lib\\http.js:510:13)\n    at Executor.execute (node_modules\\selenium-webdriver\\lib\\http.js:443:28)\n    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async Driver.execute (node_modules\\selenium-webdriver\\lib\\webdriver.js:740:17)\n    at async Meal.openMealModal (file:///C:/Users/lubic/Desktop/seleniumDemo/pageObjects/components.mjs:66:5)\n    at async Context.<anonymous> (file:///C:/Users/lubic/Desktop/seleniumDemo/test/TrackCalAppTest.mjs:438:22)",
+                "diff": null
+              },
+              "uuid": "eb97f620-65b2-4f7d-b1a3-4b7463c29dc0",
+              "parentUUID": "e752c46e-afa2-4c21-bdae-91db90ea59a4",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "aebe4d48-7268-4931-9b75-dfc1baaf0408",
+            "eb97f620-65b2-4f7d-b1a3-4b7463c29dc0"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 4088,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 0
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 0
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "10.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "CalorieTrackApp",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "/Users/lubic/Desktop/seleniumDemo/test-reports",
+        "reportFilename": "CalorieTrackApp"
+      },
+      "version": "6.2.0"
+    }
+  }
+}
